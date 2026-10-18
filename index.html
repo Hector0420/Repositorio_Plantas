@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repositorio Etno-Botánico | Santiago Yeche</title>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --background: #f1f8e9;
+            --error: #d32f2f;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        /* --- SECCIÓN DEL ENCABEZADO --- */
+        .header {
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .header h1 {
+            color: var(--primary);
+            margin: 0 0 5px 0;
+        }
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            color: #666;
+            background: #e8f5e9;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        /* --- CUERPO Y FORMULARIO --- */
+        .section-title {
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-top: 25px;
+            font-size: 1.1em;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .required::after {
+            content: " *";
+            color: var(--error);
+        }
+        input[type="text"], input[type="number"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input.error, select.error {
+            border: 2px solid var(--error);
+            background-color: #ffebee;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .checkbox-group, .radio-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding: 10px;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        .checkbox-group label, .radio-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        /* --- FOOTER Y BOTONES --- */
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+        }
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-save {
+            background-color: var(--primary);
+            color: white;
+            font-weight: bold;
+        }
+        .btn-save:hover { background-color: #1b5e20; }
+        .btn-clear {
+            background-color: #9e9e9e;
+            color: white;
+        }
+        .btn-clear:hover { background-color: #757575; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- SECCIÓN DEL ENCABEZADO -->
+    <div class="header">
+        <h1>Sistema de Información Botánica - Santiago Yeche</h1>
+        <h2>Módulo: Registro de Especies Medicinales y Productos</h2>
+        <div class="header-info">
+            <span><strong>Usuario (Rol):</strong> Estudiante Capturista (Equipo 1)</span>
+            <span><strong>Fecha de Captura:</strong> <span id="fecha-actual"></span></span>
+        </div>
+    </div>
+
+    <!-- INICIO DEL FORMULARIO -->
+    <form id="plantaForm">
+        
+        <!-- DATOS BOTÁNICOS MAESTROS -->
+        <div class="section-title">1. Datos Botánicos Maestros</div>
+        <div class="grid-2">
+            <div class="form-group">
+                <label class="required" for="idPlanta">ID Planta (Ej. SY-001)</label>
+                <input type="text" id="idPlanta" placeholder="Identificador único irrepetible" required>
+            </div>
+            <div class="form-group">
+                <label class="required" for="nombreComun">Nombre Común</label>
+                <input type="text" id="nombreComun" placeholder="Nombre dado por la comunidad" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="nombreCientifico">Nombre Científico (Opcional)</label>
+            <input type="text" id="nombreCientifico" placeholder="Género y especie">
+        </div>
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="epocaCosecha">Época de Cosecha</label>
+                <select id="epocaCosecha">
+                    <option value="">Seleccione una época...</option>
+                    <option value="Primavera">Primavera</option>
+                    <option value="Verano">Verano</option>
+                    <option value="Otoño">Otoño</option>
+                    <option value="Invierno">Invierno</option>
+                    <option value="Todo el año">Todo el año</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tipoSuelo">Tipo de Suelo Preferido</label>
+                <select id="tipoSuelo">
+                    <option value="">Seleccione un suelo...</option>
+                    <option value="Arcilloso">Arcilloso</option>
+                    <option value="Arenoso">Arenoso</option>
+                    <option value="Franco">Franco</option>
+                    <option value="Limoso">Limoso</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- CLASIFICACIÓN PROGRESIVA Y RECETA -->
+        <div class="section-title">2. Clasificación Progresiva y Receta Estandarizada</div>
+        <div class="form-group">
+            <label class="required">Partes de la Planta a Utilizar (Seleccione al menos una)</label>
+            <div class="checkbox-group" id="grupoPartes">
+                <label><input type="checkbox" class="parte-chk" value="Tallo_Corteza"> Tallo / Corteza</label>
+                <label><input type="checkbox" class="parte-chk" value="Hojas"> Hojas</label>
+                <label><input type="checkbox" class="parte-chk" value="Flor"> Flor</label>
+                <label><input type="checkbox" class="parte-chk" value="Fruto"> Fruto</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="required">Método de Preparación Principal</label>
+            <div class="radio-group">
+                <label><input type="radio" name="preparacion" value="Infusion" required> Infusión</label>
+                <label><input type="radio" name="preparacion" value="Pomada"> Pomada</label>
+                <label><input type="radio" name="preparacion" value="Tintura"> Tintura</label>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="form-group">
+                <label class="required" for="dosisG">Dosis Base (Gramos)</label>
+                <input type="number" id="dosisG" min="0" step="0.1" placeholder="Ej. 15.5" required>
+            </div>
+            <div class="form-group">
+                <label class="required" for="dosisMl">Solvente/Vehículo (Mililitros)</label>
+                <input type="number" id="dosisMl" min="0" step="1" placeholder="Ej. 250" required>
+            </div>
+        </div>
+
+        <!-- BIOSEGURIDAD Y RESTRICCIONES -->
+        <div class="section-title">3. Bioseguridad y Restricciones</div>
+        <div class="form-group">
+            <label>Nivel de Toxicidad (Valor seguro por defecto)</label>
+            <div class="radio-group">
+                <label><input type="radio" name="toxicidad" value="Bajo" checked> Bajo (Seguro)</label>
+                <label><input type="radio" name="toxicidad" value="Medio"> Medio (Precaución)</label>
+                <label><input type="radio" name="toxicidad" value="Alto"> Alto (Peligro/Estricto)</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Contraindicaciones (Grupos de riesgo a evitar)</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" value="Embarazadas"> Mujeres Embarazadas</label>
+                <label><input type="checkbox" value="Ninos"> Infantes / Niños</label>
+                <label><input type="checkbox" value="AdultosMayores"> Adultos Mayores</label>
+            </div>
+        </div>
+
+        <!-- COMENTARIOS Y ACCIONES -->
+        <div class="section-title">4. Comentarios y Observaciones</div>
+        <div class="form-group">
+            <label for="comentarios">Historias o saberes compartidos por el entrevistado:</label>
+            <textarea id="comentarios" rows="4" placeholder="Ingrese observaciones cualitativas del uso en la comunidad..."></textarea>
+        </div>
+
+        <div class="actions">
+            <button type="button" class="btn-clear" onclick="limpiarFormulario()">Limpiar Formulario</button>
+            <button type="submit" class="btn-save">Guardar Registro en Base de Datos</button>
+        </div>
+    </form>
+</div>
+
+<!-- LÓGICA JAVASCRIPT: Validaciones y Control de Calidad -->
+<script>
+    // 1. Captura de la fecha del sistema (Encabezado)
+    document.addEventListener("DOMContentLoaded", () => {
+        const fecha = new Date();
+        document.getElementById('fecha-actual').textContent = fecha.toLocaleDateString('es-MX');
+    });
+
+    // 2. Control de Calidad: Validación al enviar el formulario
+    document.getElementById('plantaForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Detiene el envío real para validar primero
+        let valido = true;
+
+        // Limpiar estilos de error previos
+        document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+
+        // Validar ID Planta
+        const idPlanta = document.getElementById('idPlanta');
+        if(!idPlanta.value.trim()) { marcarError(idPlanta); valido = false; }
+
+        // Validar Nombre Común
+        const nombreComun = document.getElementById('nombreComun');
+        if(!nombreComun.value.trim()) { marcarError(nombreComun); valido = false; }
+
+        // Validar que al menos una Parte de la Planta esté seleccionada
+        const partes = document.querySelectorAll('.parte-chk:checked');
+        const grupoPartes = document.getElementById('grupoPartes');
+        if(partes.length === 0) { 
+            grupoPartes.classList.add('error'); 
+            valido = false; 
+        }
+
+        // Validar campos numéricos (gramos y mililitros)
+        const dosisG = document.getElementById('dosisG');
+        const dosisMl = document.getElementById('dosisMl');
+        if(isNaN(dosisG.value) || dosisG.value <= 0) { marcarError(dosisG); valido = false; }
+        if(isNaN(dosisMl.value) || dosisMl.value <= 0) { marcarError(dosisMl); valido = false; }
+
+        // Retroalimentación al usuario
+        if(!valido) {
+            alert("¡Atención! Hay campos obligatorios vacíos o incorrectos. Los campos con error están marcados en rojo.");
+            return;
+        }
+
+        // Si todo está correcto (Aquí se conectaría con Supabase.js)
+        alert("¡Éxito! Los datos han pasado el control de calidad y están listos para almacenarse en Supabase.");
+        console.log("Datos listos para enviar a Base de Datos.");
+        // limpiarFormulario(); // Opcional: limpiar después de guardar
+    });
+
+    // Función para resaltar errores (Retroalimentación visual)
+    function marcarError(elemento) {
+        elemento.classList.add('error');
+    }
+
+    // Función para Cancelar / Restablecer
+    function limpiarFormulario() {
+        if(confirm("¿Estás seguro de que deseas borrar todo y empezar de nuevo?")) {
+            document.getElementById('plantaForm').reset();
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+        }
+    }
+</script>
+
+</body>
+</html>
